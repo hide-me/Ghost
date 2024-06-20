@@ -3,6 +3,7 @@ const moment = require('moment-timezone');
 const {IncorrectUsageError} = require('@tryghost/errors');
 const {EmailOpenedEvent} = require('@tryghost/email-events');
 const logging = require('@tryghost/logging');
+const uuid = require('uuid').v4;
 
 /**
  * Listen for `MemberViewEvent` to update the `member.last_seen_at` timestamp
@@ -16,6 +17,7 @@ class LastSeenAtUpdater {
      * @param {() => object} deps.getMembersApi - A function which returns an instance of members-api
      * @param {any} deps.db Database connection
      * @param {any} deps.events The event emitter
+     * @param {any} deps.jobsService The jobs service
      */
     constructor({
         services: {
@@ -23,7 +25,8 @@ class LastSeenAtUpdater {
         },
         getMembersApi,
         db,
-        events
+        events,
+        jobsService
     }) {
         if (!getMembersApi) {
             throw new IncorrectUsageError({message: 'Missing option getMembersApi'});
@@ -33,6 +36,7 @@ class LastSeenAtUpdater {
         this._settingsCacheService = settingsCache;
         this._db = db;
         this._events = events;
+        this._jobsService = jobsService;
     }
     /**
      * Subscribe to events of this domainEvents service
@@ -50,7 +54,22 @@ class LastSeenAtUpdater {
 
         domainEvents.subscribe(MemberLinkClickEvent, async (event) => {
             try {
-                await this.updateLastSeenAt(event.data.memberId, event.data.memberLastSeenAt, event.timestamp);
+                console.log('MemberLinkClickEvent', event.data.memberId, event.timestamp);
+                const jobUuid = uuid();
+                const jobId = `member-link-click:${jobUuid}`;
+                await this._jobsService.addOneOffJob({
+                    name: jobId,
+                    job: (data) => {
+                        console.log(data);
+                        return this.updateLastSeenAt(data.memberId, data.memberLastSeenAt, data.timestamp);
+                    },
+                    data: {
+                        memberLastSeenAt: event.data.memberLastSeenAt,
+                        memberId: event.data.memberId,
+                        timestamp: event.timestamp
+                    },
+                    offloaded: false
+                });
             } catch (err) {
                 logging.error(`Error in LastSeenAtUpdater.MemberLinkClickEvent listener for member ${event.data.memberId}`);
                 logging.error(err);
@@ -121,6 +140,7 @@ class LastSeenAtUpdater {
                 const currentMember = await membersApi.members.get({id: memberId}, {require: true, transacting: trx, forUpdate: true});
                 const currentMemberLastSeenAt = currentMember.get('last_seen_at');
                 if (currentMemberLastSeenAt === null || moment(moment.utc(timestamp).tz(timezone).startOf('day')).isAfter(currentMemberLastSeenAt)) {
+                    console.log('Updating last seen at');
                     const memberToUpdate = await currentMember.refresh({transacting: trx, forUpdate: false, withRelated: ['labels', 'newsletters']});
                     const updatedMember = await memberToUpdate.save({last_seen_at: moment.utc(timestamp).format('YYYY-MM-DD HH:mm:ss')}, {transacting: trx, patch: true, method: 'update'});
                     // The standard event doesn't get emitted inside the transaction, so we do it manually
