@@ -1,4 +1,8 @@
-@import '@tryghost/admin-x-design-system/styles.css';
+/* @import '@tryghost/admin-x-design-system/styles.css'; */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 .admin-x-base.admin-x-activitypub {
     animation-name: none;
@@ -15,7 +19,7 @@
       transform: scale(1);
     }
   }
-  
+
 .bump {
 animation: bump 0.3s ease-in-out;
 }
