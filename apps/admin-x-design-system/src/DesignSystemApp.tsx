@@ -5,12 +5,13 @@ import DesignSystemProvider from './providers/DesignSystemProvider';
 
 export interface DesignSystemAppProps extends React.HTMLProps<HTMLDivElement> {
     darkMode: boolean;
+    addBaseClass: boolean;
     fetchKoenigLexical: FetchKoenigLexical;
 }
 
-const DesignSystemApp: React.FC<DesignSystemAppProps> = ({darkMode, fetchKoenigLexical, className, children, ...props}) => {
+const DesignSystemApp: React.FC<DesignSystemAppProps> = ({darkMode, addBaseClass = true, fetchKoenigLexical, className, children, ...props}) => {
     const appClassName = clsx(
-        'admin-x-base',
+        addBaseClass && 'admin-x-base',
         darkMode && 'dark',
         className
     );

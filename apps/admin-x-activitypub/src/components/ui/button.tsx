@@ -5,19 +5,19 @@ import {type VariantProps, cva} from 'class-variance-authority';
 import {cn} from '@/lib/utils';
 
 const buttonVariants = cva(
-    'focus-visible:ring-slate-950 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+    'focus-visible:ring-grey-950 dark:ring-offset-grey-950 dark:focus-visible:ring-grey-300 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
     {
         variants: {
             variant: {
-                default: 'bg-slate-900 text-slate-50 hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90',
+                default: 'bg-grey-900 text-grey-50 hover:bg-grey-900/90 dark:bg-grey-50 dark:text-grey-900 dark:hover:bg-grey-50/90',
                 destructive:
-                    'text-slate-50 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90 bg-red-500 hover:bg-red-500/90',
+                    'text-grey-50 dark:text-grey-50 bg-red-500 hover:bg-red-500/90 dark:bg-red-900 dark:hover:bg-red-900/90',
                 outline:
-                    'border-slate-200 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50 border bg-white',
+                    'border-grey-200 hover:bg-grey-100 hover:text-grey-900 dark:border-grey-800 dark:bg-grey-950 dark:hover:bg-grey-800 dark:hover:text-grey-50 border bg-white',
                 secondary:
-                    'bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80',
-                ghost: 'hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50',
-                link: 'text-slate-900 dark:text-slate-50 underline-offset-4 hover:underline'
+                    'bg-grey-100 text-grey-900 hover:bg-grey-100/80 dark:bg-grey-800 dark:text-grey-50 dark:hover:bg-grey-800/80',
+                ghost: 'hover:bg-grey-100 hover:text-grey-900 dark:hover:bg-grey-800 dark:hover:text-grey-50',
+                link: 'text-grey-900 dark:text-grey-50 underline-offset-4 hover:underline'
             },
             size: {
                 default: 'h-10 px-4 py-2',

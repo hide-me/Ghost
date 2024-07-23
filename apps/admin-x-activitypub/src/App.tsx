@@ -18,6 +18,8 @@ const modals = {
 };
 
 const App: React.FC<AppProps> = ({framework, designSystem}) => {
+    designSystem.addBaseClass = false;
+
     return (
         <FrameworkProvider {...framework}>
             <RoutingProvider basePath='activitypub' modals={modals}>
