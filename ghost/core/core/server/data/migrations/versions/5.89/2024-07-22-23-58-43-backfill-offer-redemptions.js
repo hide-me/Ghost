@@ -37,7 +37,7 @@ module.exports = createTransactionalMigration(
                 };
             });
             // Bulk insert rows into the offer_redemptions table
-            await knex('offer_redemptions').insert(offerRedemptions);
+            await knex.batchInsert('offer_redemptions', offerRedemptions, 1000);
         }
     },
     async function down() {
