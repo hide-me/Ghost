@@ -9,9 +9,9 @@ const {createTransactionalMigration} = require('../../utils');
 module.exports = createTransactionalMigration(
     async function up(knex) {
         // Backfill missing offer redemptions
-        // Select all subscriptions that have an `offer_id` but don't have a matching row in the `offer_redemptions` table
         try {
-            logging.info('Selecting subscriptions that need offer redemptions backfilled');
+            // Select all subscriptions that have an `offer_id` but don't have a matching row in the `offer_redemptions` table
+            logging.info('Selecting subscriptions with missing offer redemptions');
             const result = await knex.raw(`
                 SELECT
                     mscs.id AS subscription_id,
@@ -29,7 +29,15 @@ module.exports = createTransactionalMigration(
                 WHERE
                     mscs.offer_id IS NOT NULL and r.id IS NULL;
             `);
-            const rows = result && result[0];
+            // knex.raw() returns a different result depending on the database. We need to handle either case
+            let rows = [];
+            // CASE: MySQL returns an array with two elements: the first element is an array of rows, the second element is metadata
+            if (result && result.length > 0 && Array.isArray(result[0])) {
+                rows = result[0];
+            // CASE: SQLite returns an array of rows
+            } else if (result && result.length > 0 && Object.prototype.hasOwnProperty.call(result[0], 'subscription_id')) {
+                rows = result;
+            }
             if (rows && rows.length > 0) {
                 logging.info(`Backfilling ${rows.length} offer redemptions`);
                 // Generate IDs for each row
@@ -39,7 +47,7 @@ module.exports = createTransactionalMigration(
                         ...row
                     };
                 });
-                // Bulk insert rows into the offer_redemptions table
+                // Batch insert rows into the offer_redemptions table
                 await knex.batchInsert('offer_redemptions', offerRedemptions, 1000);
             } else {
                 logging.info('No offer redemptions to backfill');
@@ -50,6 +58,5 @@ module.exports = createTransactionalMigration(
     },
     async function down() {
         // We don't want to un-backfill data, so do nothing here.
-        logging.warn('No rollback for this migration to prevent data loss');
     }
 );
