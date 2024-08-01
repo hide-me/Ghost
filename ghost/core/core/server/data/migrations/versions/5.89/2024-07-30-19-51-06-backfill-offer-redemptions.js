@@ -1,6 +1,7 @@
 // For information on writing migrations, see https://www.notion.so/ghost/Database-migrations-eb5b78c435d741d2b34a582d57c24253
 
 const logging = require('@tryghost/logging');
+const DatabaseInfo = require('@tryghost/database-info');
 const {default: ObjectID} = require('bson-objectid');
 
 // For DML - data changes
@@ -20,24 +21,25 @@ module.exports = createTransactionalMigration(
                     m.id AS member_id
                 FROM
                     members_stripe_customers_subscriptions mscs
-                        JOIN 
-                    members_stripe_customers msc ON mscs.customer_id = msc.customer_id
-                        JOIN
-                    members m ON msc.member_id = m.id
                         LEFT JOIN
                     offer_redemptions r ON r.subscription_id = mscs.id
+                        INNER JOIN 
+                    members_stripe_customers msc ON mscs.customer_id = msc.customer_id
+                        INNER JOIN
+                    members m ON msc.member_id = m.id
                 WHERE
                     mscs.offer_id IS NOT NULL and r.id IS NULL;
             `);
+
             // knex.raw() returns a different result depending on the database. We need to handle either case
             let rows = [];
-            // CASE: MySQL returns an array with two elements: the first element is an array of rows, the second element is metadata
-            if (result && result.length > 0 && Array.isArray(result[0])) {
-                rows = result[0];
-            // CASE: SQLite returns an array of rows
-            } else if (result && result.length > 0 && Object.prototype.hasOwnProperty.call(result[0], 'subscription_id')) {
+            if (DatabaseInfo.isSQLite(knex)) {
                 rows = result;
+            } else {
+                rows = result[0];
             }
+
+            // Do the backfil
             if (rows && rows.length > 0) {
                 logging.info(`Backfilling ${rows.length} offer redemptions`);
                 // Generate IDs for each row
