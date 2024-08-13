@@ -10,6 +10,7 @@ export type ToggleDirections = 'ltr' | 'rtl';
 export interface ToggleProps {
     checked?: boolean;
     disabled?: boolean;
+    name?: string;
     error?: boolean;
     size?: ToggleSizes;
     label?: React.ReactNode;
@@ -34,6 +35,7 @@ const Toggle: React.FC<ToggleProps> = ({
     error,
     checked,
     disabled,
+    name,
     onChange
 }) => {
     const id = useId();
@@ -97,13 +99,20 @@ const Toggle: React.FC<ToggleProps> = ({
     return (
         <div>
             <div className={`group flex items-start gap-2 dark:text-white ${direction === 'rtl' && 'justify-between'} ${separator && 'pb-2'}`}>
-                <TogglePrimitive.Root className={clsx(
-                    toggleBgClass,
-                    'appearance-none rounded-full bg-grey-300 transition duration-100 dark:bg-grey-800',
-                    'enabled:hover:cursor-pointer disabled:opacity-40 enabled:group-hover:opacity-80',
-                    sizeStyles,
-                    direction === 'rtl' && ' order-2'
-                )} defaultChecked={checked} disabled={disabled} id={id} onCheckedChange={handleCheckedChange}>
+                <TogglePrimitive.Root
+                    className={clsx(
+                        toggleBgClass,
+                        'appearance-none rounded-full bg-grey-300 transition duration-100 dark:bg-grey-800',
+                        'enabled:hover:cursor-pointer disabled:opacity-40 enabled:group-hover:opacity-80',
+                        sizeStyles,
+                        direction === 'rtl' && ' order-2'
+                    )}
+                    defaultChecked={checked}
+                    disabled={disabled}
+                    id={id}
+                    name={name}
+                    onCheckedChange={handleCheckedChange}
+                >
                     <TogglePrimitive.Thumb className={clsx(
                         thumbSizeStyles,
                         'block translate-x-0.5 rounded-full bg-white transition-transform duration-100 will-change-transform'

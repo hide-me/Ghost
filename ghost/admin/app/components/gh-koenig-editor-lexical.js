@@ -4,16 +4,18 @@ import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
 import {tracked} from '@glimmer/tracking';
 
-export default class GhKoenigEditorReactComponent extends Component {
+export default class GhKoenigEditorLexical extends Component {
     @service settings;
     @service feature;
 
     containerElement = null;
     titleElement = null;
+    excerptElement = null;
     mousedownY = 0;
     uploadUrl = `${ghostPaths().apiRoot}/images/upload/`;
 
     editorAPI = null;
+    secondaryEditorAPI = null;
     skipFocusEditor = false;
 
     @tracked titleIsHovered = false;
@@ -111,21 +113,34 @@ export default class GhKoenigEditorReactComponent extends Component {
         this.titleElement.focus();
     }
 
-    // move cursor to the editor on
-    // - Tab
-    // - Arrow Down/Right when input is empty or caret at end of input
-    // - Enter, creating an empty paragraph when editor is not empty
     @action
     onTitleKeydown(event) {
-        if (this.feature.get('editorSubtitle')) {
-            if (event.key === 'Enter') {
+        if (this.feature.editorExcerpt) {
+            // move cursor to the excerpt on
+            // - Tab (handled by browser)
+            // - Arrow Down/Right when input is empty or caret at end of input
+            // - Enter
+            const {key} = event;
+            const {value, selectionStart} = event.target;
+
+            if (key === 'Enter') {
                 event.preventDefault();
-                const subheadElement = document.querySelector('.gh-editor-subtitle');
-                if (subheadElement) {
-                    subheadElement.focus();
+                this.excerptElement?.focus();
+            }
+
+            if ((key === 'ArrowDown' || key === 'ArrowRight') && !event.shiftKey) {
+                const couldLeaveTitle = !value || selectionStart === value.length;
+
+                if (couldLeaveTitle) {
+                    event.preventDefault();
+                    this.excerptElement?.focus();
                 }
             }
         } else {
+            // move cursor to the editor on
+            // - Tab
+            // - Arrow Down/Right when input is empty or caret at end of input
+            // - Enter, creating an empty paragraph when editor is not empty
             const {editorAPI} = this;
 
             if (!editorAPI || event.originalEvent.isComposing) {
@@ -150,28 +165,61 @@ export default class GhKoenigEditorReactComponent extends Component {
         }
     }
 
-    // Subhead ("excerpt") Actions -------------------------------------------
+    // Subtitle ("excerpt") Actions -------------------------------------------
 
     @action
-    updateExcerpt(event) {
-        this.args.onExcerptChange?.(event.target.value);
+    registerExcerptElement(element) {
+        this.excerptElement = element;
     }
 
     @action
     focusExcerpt() {
-        this.args.onExcerptFocus?.();
+        this.excerptElement?.focus();
+
+        // timeout ensures this occurs after the keyboard events
+        setTimeout(() => {
+            this.excerptElement?.setSelectionRange(-1, -1);
+        }, 0);
     }
 
     @action
-    blurExcerpt() {
-        this.args.onExcerptBlur?.();
+    onExcerptInput(event) {
+        this.args.setExcerpt?.(event.target.value);
     }
 
     @action
     onExcerptKeydown(event) {
-        if (event.key === 'Enter') {
+        // move cursor to the title on
+        // - Shift+Tab (handled by the browser)
+        // - Arrow Up/Left when input is empty or caret at start of input
+        // move cursor to the editor on
+        // - Tab
+        // - Arrow Down/Right when input is empty or caret at end of input
+        // - Enter, creating an empty paragraph when editor is not empty
+        const {key} = event;
+        const {value, selectionStart} = event.target;
+
+        if ((key === 'ArrowUp' || key === 'ArrowLeft') && !event.shiftKey) {
+            const couldLeaveTitle = !value || selectionStart === 0;
+
+            if (couldLeaveTitle) {
+                event.preventDefault();
+                this.focusTitle();
+            }
+        }
+
+        const {editorAPI} = this;
+        const couldLeaveTitle = !value || selectionStart === value.length;
+        const arrowLeavingTitle = (key === 'ArrowRight' || key === 'ArrowDown') && couldLeaveTitle;
+
+        if (key === 'Enter' || (key === 'Tab' && !event.shiftKey) || arrowLeavingTitle) {
             event.preventDefault();
-            this.editorAPI.focusEditor({position: 'top'});
+
+            if (key === 'Enter' && !editorAPI.editorIsEmpty()) {
+                editorAPI.insertParagraphAtTop({focus: true});
+            } else {
+                editorAPI.focusEditor({position: 'top'});
+            }
         }
     }
 
@@ -185,11 +233,17 @@ export default class GhKoenigEditorReactComponent extends Component {
         this.args.registerAPI(API);
     }
 
+    @action
+    registerSecondaryEditorAPI(API) {
+        this.secondaryEditorAPI = API;
+        this.args.registerSecondaryAPI(API);
+    }
+
     // focus the editor when the editor canvas is clicked below the editor content,
     // otherwise the browser will defocus the editor and the cursor will disappear
     @action
     focusEditor(event) {
-        if (!this.skipFocusEditor && event.target.classList.contains('gh-koenig-editor-pane')) {
+        if (!this.skipFocusEditor && event.target.classList.contains('gh-koenig-editor-pane') && this.editorAPI) {
             let editorCanvas = this.editorAPI.editorInstance.getRootElement();
             let {bottom} = editorCanvas.getBoundingClientRect();
 

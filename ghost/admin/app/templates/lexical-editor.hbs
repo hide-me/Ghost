@@ -61,16 +61,19 @@
             --}}
             <GhKoenigEditorLexical
                 @title={{readonly this.post.titleScratch}}
-                @excerpt={{readonly this.post.customExcerpt}}
-                @titleAutofocus={{this.shouldFocusTitle}}
                 @titlePlaceholder={{concat (capitalize this.post.displayName) " title"}}
+                @titleAutofocus={{this.shouldFocusTitle}}
                 @titleHasTk={{this.titleHasTk}}
                 @onTitleChange={{this.updateTitleScratch}}
-                @onExcerptChange={{this.updateExcerptScratch}}
                 @onTitleBlur={{perform this.saveTitleTask}}
+                @excerpt={{readonly this.post.customExcerpt}}
+                @excerptHasTk={{this.excerptHasTk}}
+                @setExcerpt={{this.updateExcerpt}}
+                @excerptErrorMessage={{this.excerptErrorMessage}}
                 @body={{readonly this.post.lexicalScratch}}
                 @bodyPlaceholder={{concat "Begin writing your " this.post.displayName "..."}}
                 @onBodyChange={{this.updateScratch}}
+                @updateSecondaryInstanceModel={{this.updateSecondaryInstanceModel}}
                 @headerOffset={{editor.headerHeight}}
                 @scrollContainerSelector=".gh-koenig-editor"
                 @scrollOffsetBottomSelector=".gh-mobile-nav-bar"
@@ -95,6 +98,8 @@
                 }}
                 @postType={{this.post.displayName}}
                 @registerAPI={{this.registerEditorAPI}}
+                @registerSecondaryAPI={{this.registerSecondaryEditorAPI}}
+                @savePostTask={{this.savePostTask}}
             />
 
             <div class="gh-editor-wordcount-container">
@@ -133,6 +138,7 @@
                 @updateSlugTask={{this.updateSlugTask}}
                 @savePostTask={{this.savePostTask}}
                 @editorAPI={{this.editorAPI}}
+                @secondaryEditorAPI={{this.secondaryEditorAPI}}
                 @toggleSettingsMenu={{this.toggleSettingsMenu}}
             />
         {{/if}}
