@@ -88,24 +88,38 @@
             {{else}}
 
                 <section class="gh-dashboard-section">
-                    <iframe
-                        title="Top Pages"
-                        src="https://app.tinybird.co/gcp/europe-west3/endpoints/top_pages/charts/142a03bd-8a20-4565-b5ab-9663e44abc9f?token=p.eyJ1IjogIjhlNGRiYzAxLWY4Y2QtNGU3Mi1iYTQ5LTNhYmE1NDNjNjA3NCIsICJpZCI6ICI5NjI3OGQzNi0wYjZkLTQ0MWYtOTgzZC1kMGNlOTU4YmZjMjgiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.qdkdPuhx_LRbqx74UJkeNolXAeyW-xrulzckrEjc9Yg"
-                        width="100%"
-                        height="250px"
-                        style="border: none; box-sizing: border-box; float: left"
-                        >
-                    </iframe>
+                    <article class="gh-dashboard-box gh-dashboard-webanalytics-toppages">
+                        <div class="gh-dashboard-metric is-large">
+                            <div class="gh-dashboard-metric-data">
+                                <h5 class="gh-dashboard-metric-label">Top Pages</h5>
+                            </div>
+                        </div>
+                        <iframe
+                            title="Top Pages"
+                             src="https://app.tinybird.co/gcp/europe-west3/endpoints/top_pages/charts/142a03bd-8a20-4565-b5ab-9663e44abc9f?token=p.eyJ1IjogIjhlNGRiYzAxLWY4Y2QtNGU3Mi1iYTQ5LTNhYmE1NDNjNjA3NCIsICJpZCI6ICI5NjI3OGQzNi0wYjZkLTQ0MWYtOTgzZC1kMGNlOTU4YmZjMjgiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.qdkdPuhx_LRbqx74UJkeNolXAeyW-xrulzckrEjc9Yg"
+                            width="100%"
+                            height="300px"
+                            style="border: none"
+                            >
+                        </iframe>
+                    </article>
                 </section>
                 <section class="gh-dashboard-section">
-                    <iframe
-                        title="Unique Visitors"
-                        src="https://app.tinybird.co/gcp/europe-west3/endpoints/kpis/charts/fd675ddd-ac10-4025-a0aa-7b9e79e28fc5?token=p.eyJ1IjogIjhlNGRiYzAxLWY4Y2QtNGU3Mi1iYTQ5LTNhYmE1NDNjNjA3NCIsICJpZCI6ICI5NjI3OGQzNi0wYjZkLTQ0MWYtOTgzZC1kMGNlOTU4YmZjMjgiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.qdkdPuhx_LRbqx74UJkeNolXAeyW-xrulzckrEjc9Yg"
-                        width="100%"
-                        height="250px"
-                        style="border: none; box-sizing: border-box; float: right"
-                        >
-                    </iframe>
+                    <article class="gh-dashboard-box gh-dashboard-webanalytics-visits">
+                        <div class="gh-dashboard-metric is-large">
+                            <div class="gh-dashboard-metric-data">
+                                <h5 class="gh-dashboard-metric-label">Visits</h5>
+                            </div>
+                        </div>
+                       <iframe
+                            title="Unique Visitors"
+                            src="https://app.tinybird.co/gcp/europe-west3/endpoints/kpis/charts/641df1ec-274f-43e3-9fc4-d6bc17c48b78?token=p.eyJ1IjogIjhlNGRiYzAxLWY4Y2QtNGU3Mi1iYTQ5LTNhYmE1NDNjNjA3NCIsICJpZCI6ICI5NjI3OGQzNi0wYjZkLTQ0MWYtOTgzZC1kMGNlOTU4YmZjMjgiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.qdkdPuhx_LRbqx74UJkeNolXAeyW-xrulzckrEjc9Yg"
+                            width="100%"
+                            height="300px"
+                            style="border: none"
+                            >
+                        </iframe>
+                    </article>
                 </section>
 
                 {{#if this.onboarding.isChecklistShown}}
