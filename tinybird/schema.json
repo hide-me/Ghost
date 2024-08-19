@@ -1,0 +1,55 @@
+{
+    "timestamp": {
+      "type": "mockingbird.datetimeBetween",
+      "params": [
+          {
+              "start": "2024-01-01T00:00:00.000Z",
+              "end": "2024-08-19T00:00:00.000Z"
+          }
+      ]
+    },
+    "session_id": {
+      "type": "string.uuid"
+    },
+    "action": {
+      "type": "mockingbird.pick",
+      "params": [
+        {
+          "values": [
+            "page_hit"
+          ]
+        }
+      ]
+    },
+    "version": {
+      "type": "mockingbird.pick",
+      "params": [
+        {
+          "values": [
+            "1"
+          ]
+        }
+      ]
+    },
+    "payload": {
+      "type": "mockingbird.pick",
+      "params": [
+        {
+          "values": [
+            "{ \"user-agent\":\"Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.79 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\", \"locale\":\"en-US\", \"referrer\":\"https://www.kike.io\", \"pathname\":\"/coming-soon/\", \"href\":\"https://web-analytics.ghost.is/coming-soon/\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Chrome/104.0.5112.79 Safari/537.36\", \"locale\":\"en-US\", \"location\":\"IT\", \"referrer\":\"https://www.hn.com\", \"pathname\":\"/about/\", \"href\":\"https://web-analytics.ghost.is/about/\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0\", \"locale\":\"en-GB\", \"location\":\"ES\", \"referrer\":\"\", \"pathname\":\"/\", \"href\":\"https://web-analytics.ghost.is\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:103.0) Gecko/20100101 Firefox/103.0\", \"locale\":\"en-US\", \"location\":\"US\", \"referrer\":\"https://www.google.com\", \"pathname\":\"/\", \"href\":\"https://web-analytics.ghost.is\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36\", \"locale\":\"en-US\", \"location\":\"US\", \"referrer\":\"https://web-analytics.ghost.is/\", \"pathname\":\"/coming-soon/\", \"href\":\"https://web-analytics.ghost.is/coming-soon/\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36\", \"locale\":\"en-US\", \"location\":\"US\", \"referrer\":\"https://www.google.com\", \"pathname\":\"/hello-world/\", \"href\":\"https://web-analytics.ghost.is/hello-world/\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36\", \"locale\":\"en-US\", \"location\":\"IL\", \"referrer\":\"https://www.google.com\", \"pathname\":\"/hello-world/\", \"href\":\"https://web-analytics.ghost.is/hello-world/\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1\", \"locale\":\"es-ES\", \"location\":\"ES\", \"referrer\":\"https://www.twitter.com\", \"pathname\":\"/\", \"href\":\"https://web-analytics.ghost.is/\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36\", \"locale\":\"en-US\", \"location\":\"GB\", \"referrer\":\"https://www.facebook.com\", \"pathname\":\"/\", \"href\":\"https://web-analytics.ghost.is/\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36\", \"locale\":\"en-US\", \"location\":\"CH\", \"referrer\":\"https://www.qq.ch\", \"pathname\":\"coming-soon/\", \"href\":\"https://web-analytics.ghost.is/coming-soon/\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.5249.118 Mobile Safari/537.36\", \"locale\":\"en-US\", \"location\":\"US\", \"referrer\":\"https://www.yandex.com\", \"pathname\":\"/about/\", \"href\":\"https://web-analytics.ghost.is/about/\"}",
+            "{ \"user-agent\":\"Mozilla/5.0 (Linux; Android 13; SM-A102U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.5249.118 Mobile Safari/537.36\", \"locale\":\"en-US\", \"location\":\"FR\", \"referrer\":\"https://www.github.com\", \"pathname\":\"/coming-soon/\", \"href\":\"https://web-analytics.ghost.is/coming-soon/\"}"
+          ]
+        }
+      ]
+    }
+  }
