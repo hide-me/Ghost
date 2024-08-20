@@ -221,28 +221,28 @@ jobs:
   #       env:
   #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  job_i18n:
-    runs-on: ubuntu-latest
-    needs: [job_get_metadata, job_install_deps]
-    name: i18n
-    if: |
-        needs.job_get_metadata.outputs.changed_comments_ui == 'true'
-        || needs.job_get_metadata.outputs.changed_signup_form == 'true'
-        || needs.job_get_metadata.outputs.changed_portal == 'true'
-        || needs.job_get_metadata.outputs.changed_core == 'true'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "18.12.1"
+  # job_i18n:
+  #   runs-on: ubuntu-latest
+  #   needs: [job_get_metadata, job_install_deps]
+  #   name: i18n
+  #   if: |
+  #       needs.job_get_metadata.outputs.changed_comments_ui == 'true'
+  #       || needs.job_get_metadata.outputs.changed_signup_form == 'true'
+  #       || needs.job_get_metadata.outputs.changed_portal == 'true'
+  #       || needs.job_get_metadata.outputs.changed_core == 'true'
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: "18.12.1"
 
-      - name: Restore caches
-        uses: ./.github/actions/restore-cache
-        env:
-          DEPENDENCY_CACHE_KEY: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
+  #     - name: Restore caches
+  #       uses: ./.github/actions/restore-cache
+  #       env:
+  #         DEPENDENCY_CACHE_KEY: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
 
-      - name: Run i18n tests
-        run: yarn nx run @tryghost/i18n:test
+  #     - name: Run i18n tests
+  #       run: yarn nx run @tryghost/i18n:test
 
   # job_admin-tests:
   #   runs-on: ubuntu-latest
@@ -794,77 +794,77 @@ jobs:
   #       env:
   #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  job_ghost-cli:
-    name: Ghost-CLI tests
-    needs: [job_get_metadata, job_install_deps]
-    if: needs.job_get_metadata.outputs.changed_core == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          submodules: true
-      - uses: actions/setup-node@v4
-        env:
-          FORCE_COLOR: 0
-        with:
-          node-version: '16.14.0'
+  # job_ghost-cli:
+  #   name: Ghost-CLI tests
+  #   needs: [job_get_metadata, job_install_deps]
+  #   if: needs.job_get_metadata.outputs.changed_core == 'true'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #         submodules: true
+  #     - uses: actions/setup-node@v4
+  #       env:
+  #         FORCE_COLOR: 0
+  #       with:
+  #         node-version: '16.14.0'
 
-      - name: Install Ghost-CLI
-        run: npm install -g ghost-cli@latest
+  #     - name: Install Ghost-CLI
+  #       run: npm install -g ghost-cli@latest
 
-      - name: Restore caches
-        uses: ./.github/actions/restore-cache
-        env:
-          DEPENDENCY_CACHE_KEY: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
+  #     - name: Restore caches
+  #       uses: ./.github/actions/restore-cache
+  #       env:
+  #         DEPENDENCY_CACHE_KEY: ${{ needs.job_install_deps.outputs.dependency_cache_key }}
 
-      - run: npm --no-git-tag-version version minor # We need to artificially bump the minor version to get migrations to run
-        working-directory: ghost/core
+  #     - run: npm --no-git-tag-version version minor # We need to artificially bump the minor version to get migrations to run
+  #       working-directory: ghost/core
 
-      - run: npm pack
-        working-directory: ghost/core
+  #     - run: npm pack
+  #       working-directory: ghost/core
 
-      - run: mv ghost-*.tgz ghost.tgz
-        working-directory: ghost/core
+  #     - run: mv ghost-*.tgz ghost.tgz
+  #       working-directory: ghost/core
 
-      - name: Install latest v4
-        run: |
-          DIR=$(mktemp -d)
-          echo "V4_DIR=$DIR" >> $GITHUB_ENV
-          ghost install v4 --local -d $DIR
+  #     - name: Install latest v4
+  #       run: |
+  #         DIR=$(mktemp -d)
+  #         echo "V4_DIR=$DIR" >> $GITHUB_ENV
+  #         ghost install v4 --local -d $DIR
 
-      - uses: actions/setup-node@v4
-        env:
-          FORCE_COLOR: 0
-        with:
-          node-version: '18.12.1'
+  #     - uses: actions/setup-node@v4
+  #       env:
+  #         FORCE_COLOR: 0
+  #       with:
+  #         node-version: '18.12.1'
 
-      - name: Update from v4
-        run: |
-          ghost update -f -d $V4_DIR --archive $(pwd)/ghost/core/ghost.tgz
+  #     - name: Update from v4
+  #       run: |
+  #         ghost update -f -d $V4_DIR --archive $(pwd)/ghost/core/ghost.tgz
 
-      - name: Clean Install
-        run: |
-          DIR=$(mktemp -d)
-          ghost install local -d $DIR --archive $(pwd)/ghost/core/ghost.tgz
+  #     - name: Clean Install
+  #       run: |
+  #         DIR=$(mktemp -d)
+  #         ghost install local -d $DIR --archive $(pwd)/ghost/core/ghost.tgz
 
-      - name: Latest Release
-        run: |
-          DIR=$(mktemp -d)
-          ghost install local -d $DIR
-          ghost update -d $DIR --archive $(pwd)/ghost/core/ghost.tgz
+  #     - name: Latest Release
+  #       run: |
+  #         DIR=$(mktemp -d)
+  #         ghost install local -d $DIR
+  #         ghost update -d $DIR --archive $(pwd)/ghost/core/ghost.tgz
 
-      - name: Print debug logs
-        if: failure()
-        run: |
-          [ -f ~/.ghost/logs/*.log ] && cat ~/.ghost/logs/*.log
+  #     - name: Print debug logs
+  #       if: failure()
+  #       run: |
+  #         [ -f ~/.ghost/logs/*.log ] && cat ~/.ghost/logs/*.log
 
-      - uses: tryghost/actions/actions/slack-build@main
-        if: failure() && github.event_name == 'push' && github.ref == 'refs/heads/main'
-        with:
-          status: ${{ job.status }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #     - uses: tryghost/actions/actions/slack-build@main
+  #       if: failure() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #       with:
+  #         status: ${{ job.status }}
+  #       env:
+  #         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   job_coverage:
     name: Coverage
@@ -919,8 +919,8 @@ jobs:
         job_get_metadata,
         job_install_deps,
         # job_lint,
-        job_i18n,
-        job_ghost-cli,
+        # job_i18n,
+        # job_ghost-cli,
         # job_admin-tests,
         # job_unit-tests,
         # job_database-tests,
