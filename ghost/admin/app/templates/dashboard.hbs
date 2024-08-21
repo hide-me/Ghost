@@ -97,16 +97,9 @@
                         <Dashboard::Charts::TopPages @chartDays={{this.days}} />
                     </article>
                 </section>
-                <section class="gh-dashboard-section">
-                    <article class="gh-dashboard-box gh-dashboard-webanalytics-visits">
-                        <div class="gh-dashboard-metric is-large">
-                            <div class="gh-dashboard-metric-data">
-                                <h5 class="gh-dashboard-metric-label">Visits</h5>
-                            </div>
-                        </div>
-                       <Dashboard::Charts::Kpis @chartDays={{this.days}} />
-                    </article>
-                </section>
+
+                <Dashboard::Charts::KpisOverview @chartDays={{this.days}} />
+
 
                 {{#if this.onboarding.isChecklistShown}}
                     <Dashboard::OnboardingChecklist />

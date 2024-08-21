@@ -32,7 +32,7 @@ export default class KpisComponent extends Component {
                 endpoint="https://api.tinybird.co/v0/pipes/kpis.json"
                 token={config.tinybirdToken}
                 index="date"
-                categories={['visits']}
+                categories={[props.selected]}
                 colorPalette={['#DC82C8', '#FFC0F1']}
                 height="300px"
                 params={params}

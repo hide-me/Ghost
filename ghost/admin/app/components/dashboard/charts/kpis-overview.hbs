@@ -1,0 +1,26 @@
+<section class="gh-dashboard-section">
+    <article class="gh-dashboard-box gh-dashboard-webanalytics-visits">
+        <div class="gh-dashboard-tabs">
+            <button type="button" class="gh-dashboard-tab {{if this.visitsTabSelected 'is-selected'}}" {{on "click" this.changeTabToVisits}}>
+                <Dashboard::Parts::Metric
+                    @label="Unique visitors" />
+            </button>
+
+            <button type="button" class="gh-dashboard-tab {{if this.pageviewsTabSelected 'is-selected'}}" {{on "click" this.changeTabToPageviews}}>
+                <Dashboard::Parts::Metric
+                    @label="Site Pageviews" />
+            </button>
+
+            <button type="button" class="gh-dashboard-tab {{if this.avgVisitTimeTabSelected 'is-selected'}}" {{on "click" this.changeTabToAvgVisitTime}}>
+                <Dashboard::Parts::Metric
+                    @label="Avg Visit Time" />
+            </button>
+
+            <button type="button" class="gh-dashboard-tab {{if this.bounceRateTabSelected 'is-selected'}}" {{on "click" this.changeTabToBounceRate}}>
+                <Dashboard::Parts::Metric
+                    @label="Bounce Rate" />
+            </button>
+        </div>
+        <Dashboard::Charts::Kpis @chartDays={{@chartDays}} @selected={{this.selected}} />
+    </article>
+</section>
