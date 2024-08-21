@@ -7,6 +7,8 @@ module.exports = function (environment) {
         environment,
         cdnUrl: process.env.GHOST_CDN_URL || '',
         editorUrl: process.env.EDITOR_URL || '',
+        tinybirdToken: process.env.TINYBIRD_TOKEN || 'p.eyJ1IjogIjgyYzkzODRjLWZkYjUtNGI2Ni1hNDJkLTRhMzI0NWRjNjJiZCIsICJpZCI6ICIyYjliMTM0Zi0xNWMxLTRjZDYtYjU3OC0wYzMxNzVmOTcxYzUiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ._I6WVV4D3b98Tp0Rn17FaGfNcYiS9CvtSF_EfXQLeR4',
+        tinybirdCid: process.env.TINYBIRD_CID || 'ab123456',
         rootURL: '',
         locationType: 'trailing-hash',
         EmberENV: {
