@@ -94,7 +94,7 @@
                                 <h5 class="gh-dashboard-metric-label">Top Pages</h5>
                             </div>
                         </div>
-                        <Dashboard::Charts::TopPages />
+                        <Dashboard::Charts::TopPages @chartDays={{this.days}} />
                     </article>
                 </section>
                 <section class="gh-dashboard-section">
@@ -104,7 +104,7 @@
                                 <h5 class="gh-dashboard-metric-label">Visits</h5>
                             </div>
                         </div>
-                       <Dashboard::Charts::Kpis />
+                       <Dashboard::Charts::Kpis @chartDays={{this.days}} />
                     </article>
                 </section>
 
