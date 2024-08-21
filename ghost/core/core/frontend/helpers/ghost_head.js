@@ -195,6 +195,12 @@ module.exports = async function ghost_head(options) { // eslint-disable-line cam
     const referrerPolicy = config.get('referrerPolicy') ? config.get('referrerPolicy') : 'no-referrer-when-downgrade';
     const favicon = blogIcon.getIconUrl();
     const iconType = blogIcon.getIconType(favicon);
+    const memberId = dataRoot.member?.uuid;
+    const postId = dataRoot.post?.uuid;
+
+    console.log('dataRoot', dataRoot);
+    console.log('memberId', memberId);
+    console.log('postId', postId);
 
     debug('preparation complete, begin fetch');
 
@@ -319,6 +325,16 @@ module.exports = async function ghost_head(options) { // eslint-disable-line cam
             if (!_.isEmpty(tagCodeInjection)) {
                 head.push(tagCodeInjection);
             }
+
+            head.push(`<script defer
+                src="https://unpkg.com/@tinybirdco/flock.js"
+                data-host="https://api.tinybird.co"
+                data-token="p.eyJ1IjogIjgyYzkzODRjLWZkYjUtNGI2Ni1hNDJkLTRhMzI0NWRjNjJiZCIsICJpZCI6ICI1MzIyYTczMS04OGE5LTRjZmItOTA2ZS0zZDQ5ODc2OTA2NzciLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.RFL6BVCajzoEtolcyYLIT86zUYwHlC4-zQyjLr8ML7o"
+                tb_cid="ab123456",
+                tb_member_id="${memberId}"
+                tb_post_id="${postId}"
+                >
+              </script>`);
         }
 
         debug('end');
