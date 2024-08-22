@@ -7,13 +7,6 @@ import moment from 'moment-timezone';
 import {BarList} from '@tinybirdco/charts';
 
 export default class TopPages extends Component {
-    /**
-     * @param {Object} params
-     * @param {string} params.cid
-     * @param {string} [params.date_from]
-     * @param {string} [params.date_to]
-     * @returns {JSX.Element}
-     */
     ReactComponent = (props) => {
         let chartDays = props.chartDays;
 
@@ -36,7 +29,7 @@ export default class TopPages extends Component {
 
         return (
             <BarList
-                endpoint={ 'https://api.tinybird.co/v0/pipes/top_pages.json?cid=' + config.tinybirdCid }
+                endpoint={'https://api.tinybird.co/v0/pipes/top_pages.json'}
                 token={config.tinybirdToken}
                 index="pathname"
                 categories={['hits', 'visits']}
