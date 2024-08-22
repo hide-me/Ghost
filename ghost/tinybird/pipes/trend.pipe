@@ -19,9 +19,12 @@ DESCRIPTION >
     Get last 30 minutes metrics gropued by minute
 
 SQL >
+    %
     select toStartOfMinute(timestamp) as t, uniq(session_id) as visits
     from analytics_hits
-    where timestamp >= (now() - interval 30 minute)
+    where
+        cid = {{String(cid, 'cd456789', description="Tenant ID", required=True)}} and
+        timestamp >= (now() - interval 30 minute)
     group by toStartOfMinute(timestamp)
     order by toStartOfMinute(timestamp)
 

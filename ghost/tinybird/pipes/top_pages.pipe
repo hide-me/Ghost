@@ -14,7 +14,7 @@ SQL >
     select pathname, uniqMerge(visits) as visits, countMerge(hits) as hits
     from analytics_pages_mv
     where
-        cid = {{String(cid, Null, description="Tenant ID", required=True)}} and
+        cid = {{String(cid, 'cd456789', description="Tenant ID", required=True)}} and
         {% if defined(date_from) %}
             date
             >=
