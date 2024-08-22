@@ -11,7 +11,12 @@ DESCRIPTION >
 
 SQL >
     %
-    select pathname, uniqMerge(visits) as visits, countMerge(hits) as hits
+    select
+        pathname,
+        uniqMerge(visits) as visits,
+        countMerge(hits) as hits,
+        countMerge(logged_in_hits) as logged_in_hits,
+        countMerge(logged_out_hits) as logged_out_hits
     from analytics_pages_mv
     where
         cid = {{String(cid, 'cd456789', description="Tenant ID", required=True)}} and

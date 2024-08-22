@@ -32,8 +32,8 @@ export default class TopPages extends Component {
                 endpoint={'https://api.tinybird.co/v0/pipes/top_pages.json'}
                 token={config.tinybirdToken}
                 index="pathname"
-                categories={['hits', 'visits']}
-                colorPalette={['#DC82C8', '#FFC0F1']}
+                categories={['visits', 'hits', 'logged_in_hits', 'logged_out_hits']}
+                colorPalette={['#DC82C8', '#FFC0F1', '#DC82C8', '#FFC0F1']}
                 height="300px"
                 params={params}
             />

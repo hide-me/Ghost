@@ -19,6 +19,8 @@ SQL >
         JSONExtractString(payload, 'pathname') as pathname,
         JSONExtractString(payload, 'href') as href,
         JSONExtractString(payload, 'cid') as cid,
+        JSONExtractString(payload, 'member_id') as member_id,
+        JSONExtractString(payload, 'post_id') as post_id,
         lower(JSONExtractString(payload, 'user-agent')) as user_agent
     FROM analytics_events
     where action = 'page_hit'
@@ -31,6 +33,13 @@ SQL >
         action,
         version,
         session_id,
+        case
+            when member_id REGEXP '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            then true
+            else false
+        END as logged_in,
+        member_id,
+        post_id,
         location,
         referrer,
         pathname,

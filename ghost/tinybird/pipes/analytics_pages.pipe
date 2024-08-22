@@ -11,7 +11,9 @@ SQL >
         location,
         pathname,
         uniqState(session_id) AS visits,
-        countState() AS hits
+        countState() AS hits,
+        countStateIf(logged_in = true) AS logged_in_hits,
+        countStateIf(logged_in = false) AS logged_out_hits
     FROM analytics_hits
     GROUP BY date, device, browser, location, pathname, cid
 
