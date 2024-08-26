@@ -33,7 +33,10 @@ export default class KpisComponent extends Component {
                 token={config.tinybirdToken}
                 index="date"
                 categories={[props.selected]}
-                colorPalette={['#DC82C8', '#FFC0F1']}
+                colorPalette={['#8E42FF', '#7FDE8A', '#FBCE75', '#F97DB7', '#6ED0FB']}
+                backgroundColor="transparent"
+                fontSize="13px"
+                textColor="#AEB7C1"
                 height="300px"
                 params={params}
                 options={{

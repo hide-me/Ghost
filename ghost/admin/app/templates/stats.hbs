@@ -7,29 +7,21 @@
         </section>
     </GhCanvasHeader>
 
-    <section class="view-container">
-        <section class="gh-dashboard-section">
-            <article class="gh-dashboard-box gh-dashboard-webanalytics-toppages">
-                <div class="gh-dashboard-metric is-large">
-                    <div class="gh-dashboard-metric-data">
-                        <h5 class="gh-dashboard-metric-label">Top Browsers</h5>
-                    </div>
-                </div>
-                <Dashboard::Charts::TopBrowsers @chartDays={{this.days}} />
-            </article>
+    <section class="view-container gh-stats">
+        <section class="gh-stats-container">
+            <Dashboard::Charts::KpisOverview @chartDays={{this.days}} />
         </section>
 
-        <section class="gh-dashboard-section">
-            <article class="gh-dashboard-box gh-dashboard-webanalytics-toppages">
-                <div class="gh-dashboard-metric is-large">
-                    <div class="gh-dashboard-metric-data">
-                        <h5 class="gh-dashboard-metric-label">Top Pages</h5>
-                    </div>
-                </div>
+        <section class="gh-stats-grid cols-2">
+            <div class="gh-stats-container">
+                <h5 class="gh-stats-metric-label">Top Pages</h5>
                 <Dashboard::Charts::TopPages @chartDays={{this.days}} />
-            </article>
+            </div>
+            <div class="gh-stats-container">
+                <h5 class="gh-stats-metric-label">Top Browsers</h5>
+                <Dashboard::Charts::TopBrowsers @chartDays={{this.days}} />
+            </div>
         </section>
 
-        <Dashboard::Charts::KpisOverview @chartDays={{this.days}} />
     </section>
 </section>

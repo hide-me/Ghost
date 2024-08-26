@@ -33,8 +33,8 @@ export default class TopPages extends Component {
                 token={config.tinybirdToken}
                 index="pathname"
                 categories={['visits', 'hits', 'logged_in_hits', 'logged_out_hits']}
-                colorPalette={['#DC82C8', '#FFC0F1', '#DC82C8', '#FFC0F1']}
-                height="300px"
+                colorPalette={['#B78AFB', '#7FDE8A', '#FBCE75', '#F97DB7', '#6ED0FB']}
+                height="280px"
                 params={params}
             />
         );

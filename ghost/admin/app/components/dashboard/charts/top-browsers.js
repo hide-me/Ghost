@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Component from "@glimmer/component";
-import React from "react";
-import config from "ghost-admin/config/environment";
-import moment from "moment-timezone";
-import { PieChart } from "@tinybirdco/charts";
+import Component from '@glimmer/component';
+import React from 'react';
+import config from 'ghost-admin/config/environment';
+import moment from 'moment-timezone';
+import {PieChart} from '@tinybirdco/charts';
 
 export default class TopBrowsers extends Component {
     /**
@@ -17,10 +17,10 @@ export default class TopBrowsers extends Component {
     ReactComponent = (props) => {
         let chartDays = props.chartDays;
 
-        const endDate = moment().endOf("day");
+        const endDate = moment().endOf('day');
         const startDate = moment()
-            .subtract(chartDays - 1, "days")
-            .startOf("day");
+            .subtract(chartDays - 1, 'days')
+            .startOf('day');
 
         /**
          * @typedef {Object} Params
@@ -32,8 +32,8 @@ export default class TopBrowsers extends Component {
          */
         const params = {
             cid: config.tinybirdCid,
-            date_from: startDate.format("YYYY-MM-DD"),
-            date_to: endDate.format("YYYY-MM-DD"),
+            date_from: startDate.format('YYYY-MM-DD'),
+            date_to: endDate.format('YYYY-MM-DD')
         };
 
         return (
@@ -41,20 +41,12 @@ export default class TopBrowsers extends Component {
                 endpoint="https://api.tinybird.co/v0/pipes/top_browsers.json"
                 token={config.tinybirdToken}
                 index="browser"
-                categories={["hits"]}
-                colorPalette={[
-                    "#27F795",
-                    "#008060",
-                    "#0EB1B9",
-                    "#9263AF",
-                    "#5A6FC0",
-                    "#86BFDB",
-                    "#FFC145",
-                    "#FF6B6C",
-                    "#DC82C8",
-                    "#FFC0F1",
-                ]}
-                height="500px"
+                categories={['hits']}
+                colorPalette={['#B78AFB', '#7FDE8A', '#FBCE75', '#F97DB7', '#6ED0FB']}
+                backgroundColor="transparent"
+                fontSize="13px"
+                textColor="#AEB7C1"
+                height="240px"
                 params={params}
             />
         );
