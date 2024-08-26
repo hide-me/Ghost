@@ -1,0 +1,35 @@
+<section class="gh-canvas gh-canvas-sticky">
+    <GhCanvasHeader class="gh-canvas-header sticky break tablet post-header">
+        <GhCustomViewTitle @title="Stats" />
+
+        <section class="view-actions">
+            [TK] Date range
+        </section>
+    </GhCanvasHeader>
+
+    <section class="view-container">
+        <section class="gh-dashboard-section">
+            <article class="gh-dashboard-box gh-dashboard-webanalytics-toppages">
+                <div class="gh-dashboard-metric is-large">
+                    <div class="gh-dashboard-metric-data">
+                        <h5 class="gh-dashboard-metric-label">Top Browsers</h5>
+                    </div>
+                </div>
+                <Dashboard::Charts::TopBrowsers @chartDays={{this.days}} />
+            </article>
+        </section>
+
+        <section class="gh-dashboard-section">
+            <article class="gh-dashboard-box gh-dashboard-webanalytics-toppages">
+                <div class="gh-dashboard-metric is-large">
+                    <div class="gh-dashboard-metric-data">
+                        <h5 class="gh-dashboard-metric-label">Top Pages</h5>
+                    </div>
+                </div>
+                <Dashboard::Charts::TopPages @chartDays={{this.days}} />
+            </article>
+        </section>
+
+        <Dashboard::Charts::KpisOverview @chartDays={{this.days}} />
+    </section>
+</section>

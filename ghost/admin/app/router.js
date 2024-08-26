@@ -34,6 +34,7 @@ Router.map(function () {
     this.route('posts.debug', {path: '/posts/analytics/:post_id/debug'});
 
     this.route('pages');
+    this.route('stats');
 
     this.route('lexical-editor', {path: 'editor'}, function () {
         this.route('new', {path: ':type'});
