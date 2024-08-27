@@ -4,7 +4,7 @@ import Component from '@glimmer/component';
 import React from 'react';
 import config from 'ghost-admin/config/environment';
 import moment from 'moment-timezone';
-import {PieChart} from '@tinybirdco/charts';
+import {DonutChart} from '@tinybirdco/charts';
 
 export default class TopBrowsers extends Component {
     /**
@@ -37,7 +37,7 @@ export default class TopBrowsers extends Component {
         };
 
         return (
-            <PieChart
+            <DonutChart
                 endpoint="https://api.tinybird.co/v0/pipes/top_browsers.json"
                 token={config.tinybirdToken}
                 index="browser"
@@ -46,7 +46,8 @@ export default class TopBrowsers extends Component {
                 backgroundColor="transparent"
                 fontSize="13px"
                 textColor="#AEB7C1"
-                height="240px"
+                showLegend={true}
+                height="280px"
                 params={params}
             />
         );
