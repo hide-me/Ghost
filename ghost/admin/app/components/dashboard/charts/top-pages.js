@@ -4,7 +4,7 @@ import Component from '@glimmer/component';
 import React from 'react';
 import config from 'ghost-admin/config/environment';
 import moment from 'moment-timezone';
-import {BarList} from '@tinybirdco/charts';
+import {BarList, useQuery} from '@tinybirdco/charts';
 
 export default class TopPages extends Component {
     ReactComponent = (props) => {
@@ -27,15 +27,22 @@ export default class TopPages extends Component {
             date_to: endDate.format('YYYY-MM-DD')
         };
 
+        const {data, meta, error, loading} = useQuery({
+            endpoint: 'https://api.tinybird.co/v0/pipes/top_pages.json',
+            token: config.tinybirdToken,
+            params
+        });
+
         return (
             <BarList
-                endpoint={'https://api.tinybird.co/v0/pipes/top_pages.json'}
-                token={config.tinybirdToken}
+                data={data}
+                meta={meta}
+                loading={loading}
+                error={error}
                 index="pathname"
                 categories={['visits', 'hits', 'logged_in_hits', 'logged_out_hits']}
-                colorPalette={['#B78AFB', '#7FDE8A', '#FBCE75', '#F97DB7', '#6ED0FB']}
-                height="280px"
-                params={params}
+                colorPalette={['#DC82C8', '#FFC0F1', '#DC82C8', '#FFC0F1']}
+                height="300px"
             />
         );
     };

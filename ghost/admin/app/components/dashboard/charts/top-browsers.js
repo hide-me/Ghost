@@ -4,7 +4,7 @@ import Component from '@glimmer/component';
 import React from 'react';
 import config from 'ghost-admin/config/environment';
 import moment from 'moment-timezone';
-import {DonutChart} from '@tinybirdco/charts';
+import {DonutChart, useQuery} from '@tinybirdco/charts';
 
 export default class TopBrowsers extends Component {
     /**
@@ -36,10 +36,18 @@ export default class TopBrowsers extends Component {
             date_to: endDate.format('YYYY-MM-DD')
         };
 
+        const {data, meta, error, loading} = useQuery({
+            endpoint: 'https://api.tinybird.co/v0/pipes/top_browsers.json',
+            token: config.tinybirdToken,
+            params
+        });
+
         return (
             <DonutChart
-                endpoint="https://api.tinybird.co/v0/pipes/top_browsers.json"
-                token={config.tinybirdToken}
+                data={data}
+                meta={meta}
+                loading={loading}
+                error={error}
                 index="browser"
                 categories={['hits']}
                 colorPalette={['#B78AFB', '#7FDE8A', '#FBCE75', '#F97DB7', '#6ED0FB']}
