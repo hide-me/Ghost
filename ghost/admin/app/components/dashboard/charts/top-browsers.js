@@ -1,7 +1,7 @@
 'use client';
 
 import Component from '@glimmer/component';
-import React from 'react';
+import React, {useEffect} from 'react';
 import config from 'ghost-admin/config/environment';
 import moment from 'moment-timezone';
 import {DonutChart, useQuery} from '@tinybirdco/charts';
@@ -36,11 +36,26 @@ export default class TopBrowsers extends Component {
             date_to: endDate.format('YYYY-MM-DD')
         };
 
-        const {data, meta, error, loading} = useQuery({
+        const {data, meta, error, loading, refetch} = useQuery({
             endpoint: 'https://api.tinybird.co/v0/pipes/top_browsers.json',
             token: config.tinybirdToken,
             params
+            // refreshInterval: 60000
         });
+
+        useEffect(() => {
+            const handleVisibilityChange = () => {
+                if (!document.hidden) {
+                    refetch();
+                }
+            };
+
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+
+            return () => {
+                document.removeEventListener('visibilitychange', handleVisibilityChange);
+            };
+        }, [refetch]);
 
         return (
             <DonutChart

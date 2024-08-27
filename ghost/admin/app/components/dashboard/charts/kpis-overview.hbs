@@ -2,25 +2,25 @@
     <button type="button" class="gh-stats-tab {{if this.visitsTabSelected 'is-selected'}}" {{on "click" this.changeTabToVisits}}>
         <Stats::Parts::Metric
             @label="Unique visitors"
-            @value="1,209" />
+            @value={{this.totals.visits}} />
     </button>
 
     <button type="button" class="gh-stats-tab {{if this.pageviewsTabSelected 'is-selected'}}" {{on "click" this.changeTabToPageviews}}>
         <Stats::Parts::Metric
             @label="Site Pageviews"
-            @value="967" />
+            @value={{this.totals.pageviews}} />
     </button>
 
     <button type="button" class="gh-stats-tab {{if this.avgVisitTimeTabSelected 'is-selected'}}" {{on "click" this.changeTabToAvgVisitTime}}>
         <Stats::Parts::Metric
             @label="Avg Visit Time"
-            @value="16m" />
+            @value="{{this.totals.avg_session_sec}}m" />
     </button>
 
     <button type="button" class="gh-stats-tab {{if this.bounceRateTabSelected 'is-selected'}}" {{on "click" this.changeTabToBounceRate}}>
         <Stats::Parts::Metric
             @label="Bounce Rate"
-            @value="4%" />
+            @value="{{this.totals.bounce_rate}}%" />
     </button>
 </div>
 <Dashboard::Charts::Kpis @chartDays={{@chartDays}} @selected={{this.selected}} />

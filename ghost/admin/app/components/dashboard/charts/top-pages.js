@@ -27,18 +27,24 @@ export default class TopPages extends Component {
             date_to: endDate.format('YYYY-MM-DD')
         };
 
-        const {data, meta, error, loading} = useQuery({
-            endpoint: 'https://api.tinybird.co/v0/pipes/top_pages.json',
-            token: config.tinybirdToken,
-            params
-        });
+        // @ZIMO: To switch to useQuery, uncomment the following lines
+        // const {data, meta, error, loading} = useQuery({
+        //     endpoint: 'https://api.tinybird.co/v0/pipes/top_pages.json',
+        //     token: config.tinybirdToken,
+        //     params
+        // });
 
         return (
             <BarList
-                data={data}
-                meta={meta}
-                loading={loading}
-                error={error}
+                // @ZIMO: To switch to useQuery, comment out the following lines
+                endpoint="https://api.tinybird.co/v0/pipes/top_pages.json"
+                token={config.tinybirdToken}
+                params={params}
+                // @ZIMO: To switch to useQuery, uncomment the following lines
+                // data={data}
+                // meta={meta}
+                // error={error}
+                // loading={loading}
                 index="pathname"
                 categories={['visits', 'hits', 'logged_in_hits', 'logged_out_hits']}
                 colorPalette={['#DC82C8', '#FFC0F1', '#DC82C8', '#FFC0F1']}

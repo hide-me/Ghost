@@ -694,7 +694,7 @@ export default class KoenigLexicalEditor extends Component {
                             onError={this.onError}
                             darkMode={this.feature.nightShift}
                             isTKEnabled={true}
-                        >
+           x             >
                             <KoenigEditor
                                 editorResource={this.editorResource}
                                 cursorDidExitAtTop={this.args.cursorDidExitAtTop}
