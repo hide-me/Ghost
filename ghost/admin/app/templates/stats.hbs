@@ -3,7 +3,20 @@
         <GhCustomViewTitle @title="Stats" />
 
         <section class="view-actions">
-            [TK] Date range
+            <PowerSelect
+                @selected={{this.selectedDaysOption}}
+                @options={{this.daysOptions}}
+                @searchEnabled={{false}}
+                @onChange={{this.onDaysChange}}
+                @triggerComponent={{component "gh-power-select/trigger"}}
+                @triggerClass="gh-contentfilter-menu-trigger"
+                @dropdownClass="gh-contentfilter-menu-dropdown is-narrow"
+                @matchTriggerWidth={{false}}
+                @horizontalPosition="right"
+                as |option|
+            >
+                {{#if option.name}}{{option.name}}{{else}}<span class="red">Unknown option</span>{{/if}}
+            </PowerSelect>
         </section>
     </GhCanvasHeader>
 

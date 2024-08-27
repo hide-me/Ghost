@@ -10,8 +10,6 @@ export default class KpisComponent extends Component {
     ReactComponent = (props) => {
         let chartDays = props.chartDays;
 
-        // @TODO: ATM there's a two day worth gap (padding) on the right side
-        // of the chart. endDate needs to be adjusted to get rid of it
         const endDate = moment().endOf('day');
         const startDate = moment().subtract(chartDays - 1, 'days').startOf('day');
 
