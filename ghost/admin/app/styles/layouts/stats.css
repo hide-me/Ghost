@@ -81,9 +81,12 @@
 }
 
 .gh-stats-metric {
-    min-width: 180px;
     width: 100%;
     padding: 16px 20px;
+}
+
+.gh-stats-tab.min-width .gh-stats-metric {
+    min-width: 180px;
 }
 
 .gh-stats-metric-data {
