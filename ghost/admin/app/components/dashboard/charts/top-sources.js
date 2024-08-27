@@ -74,20 +74,36 @@ export default class TopBrowsers extends Component {
                 params={params}
                 options={{
                     tooltip: {
-                        show: false
+                        trigger: 'axis',
+                        backgroundColor: '#fff',
+                        textStyle: {
+                            color: '#15171A',
+                            fontWeight: 'bold'
+                        },
+                        axisPointer: {
+                            type: 'none'
+                        },
+                        formatter: function (fparams) {
+                            var indexValue = fparams[0].name;
+                            var dataValue = fparams[0].value;
+                            return '<span style="font-weight: 400;">' + indexValue + '</span><br/>' + '<span style="font-weight: 600;">' + dataValue + '</span>';
+                        },
+                        extraCssText: 'box-shadow: 0px 100px 80px 0px rgba(0, 0, 0, 0.07), 0px 41.778px 33.422px 0px rgba(0, 0, 0, 0.05), 0px 22.336px 17.869px 0px rgba(0, 0, 0, 0.04), 0px 12.522px 10.017px 0px rgba(0, 0, 0, 0.04), 0px 6.65px 5.32px 0px rgba(0, 0, 0, 0.03), 0px 2.767px 2.214px 0px rgba(0, 0, 0, 0.02);'
                     },
                     xAxis: {
                         type: 'value',
                         axisLabel: {show: false},
                         splitLine: {show: false},
                         axisLine: {show: false},
-                        axisTick: {show: false}
+                        axisTick: {show: false},
+                        max: 'dataMax'
                     },
                     yAxis: {
                         type: 'category',
                         data: data?.map(row => row.referrer).reverse() || [],
                         axisLabel: {
-                            align: 'right',
+                            inside: true,
+                            align: 'left',
                             margin: 10,
                             show: true,
                             color: '#15171A',
@@ -104,7 +120,7 @@ export default class TopBrowsers extends Component {
                         z: 1,
                         data: data?.map(row => row.hits).reverse() || [],
                         label: {
-                            show: true,
+                            show: false,
                             position: 'right',
                             formatter: '{c}',
                             align: 'right',
@@ -113,7 +129,7 @@ export default class TopBrowsers extends Component {
                         },
                         itemStyle: {
                             z: 1,
-                            color: '#CCADF9',
+                            color: '#D6F5D9',
                             borderRadius: [0, 4, 4, 0]
                         },
                         barCategoryGap: '20%',
@@ -123,7 +139,7 @@ export default class TopBrowsers extends Component {
                         }
                     }],
                     grid: {
-                        left: '20',
+                        left: '0',
                         right: '0',
                         bottom: '0',
                         top: '0',

@@ -47,7 +47,7 @@ export default class TopPages extends Component {
                 // loading={loading}
                 index="pathname"
                 categories={['visits', 'hits', 'logged_in_hits', 'logged_out_hits']}
-                colorPalette={['#CCADF9', '#FFC0F1', '#DC82C8', '#FFC0F1']}
+                colorPalette={['#D0F1FF', '#FFC0F1', '#DC82C8', '#FFC0F1']}
                 height="300px"
             />
         );
