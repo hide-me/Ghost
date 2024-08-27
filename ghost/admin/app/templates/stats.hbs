@@ -18,6 +18,13 @@
                 <Dashboard::Charts::TopPages @chartDays={{this.days}} />
             </div>
             <div class="gh-stats-container">
+                <h5 class="gh-stats-metric-label">Top Sources</h5>
+                <Dashboard::Charts::TopSources @chartDays={{this.days}} />
+            </div>
+        </section>
+
+        <section class="gh-stats-grid cols-2">
+            <div class="gh-stats-container">
                 <h5 class="gh-stats-metric-label">Top Browsers</h5>
                 <Dashboard::Charts::TopBrowsers @chartDays={{this.days}} />
             </div>
